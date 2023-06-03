@@ -1,0 +1,18 @@
+static/plots/*
+data/data_*
+processing/data_*
+data/*
+# Byte-compiled / optimized / DLL files
+__pycache__/
+server/__pycache__/
+*.py[cod]
+*$py.class
+test.py
+.env
+model/cardiffnlp/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+.spyproject/
+.spyproject/*
