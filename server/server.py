@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
-from textblob import TextBlob
 from model.sentiment import calculateSentiment
 from data.get_tweets import get_tweets
 
