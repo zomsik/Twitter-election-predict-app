@@ -3,65 +3,42 @@ from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
-from model.sentiment import calculateSentiment
-from data.get_tweets import get_tweets
+from model.cardiffnlpSentiment import calculateCardiffnlpSentiment
+from tweets.get_tweets import get_tweets
+from model.ownSentiment import predict
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 
-# Strona główna z menu
+# Strona główna z wyborem tweetów
 @app.get("/", response_class=HTMLResponse)
 async def index(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
+
 
 # Strona z wynikiem oceny pojedynczego tweeta
 @app.post("/analyze_tweet", response_class=HTMLResponse)
 async def analyze_tweet(request: Request):
     form_data = await request.form()
     tweet_text = form_data.get("tweet_text")
+    cardiffnlpRanking, cardiffnlpScore = calculateCardiffnlpSentiment(tweet_text)
+    
+    ownRanking, ownScore = predict(tweet_text)
+    
+    return templates.TemplateResponse("result_tweet.html", {"request": request, "tweet": tweet_text, "ranking_cardiffnlp_model": cardiffnlpRanking, "sentiment_cardiffnlp_model": cardiffnlpScore, "ranking_own_model": ownRanking, "sentiment_own_model": ownScore})
+                                                            
 
-
-    ranking, score = calculateSentiment(tweet_text)
-    # Tutaj dodaj kod do oceny pojedynczego tweeta
-    # Możesz użyć wcześniej omówionego modelu do analizy sentymentu
-
-    return templates.TemplateResponse("result_tweet.html", {"request": request, "tweet": tweet_text,  "sentiment_pretrained_model": 0.34, "sentiment_own_model": score, "ranking_own_model": ranking})
 
 # Strona z wynikami webscrapowania tweetów
 @app.post("/scrape_tweets", response_class=HTMLResponse)
 async def scrape_tweets(request: Request):
     form_data = await request.form()
     num_tweets = form_data.get("num_tweets")
-
-    # Tutaj dodaj kod do webscrapowania tweetów na podstawie podanej liczby
-    # Możesz użyć odpowiednich bibliotek, takich jak BeautifulSoup czy Scrapy
-
-    scraped_tweets = [...]  # Przykładowa lista zebranych tweetów
+    
+    #scraped_tweets = get_tweets("#biden", num_tweets)
+    
+    scraped_tweets = []
 
     return templates.TemplateResponse("result_scraped.html", {"request": request, "tweets": scraped_tweets})
-
-
-
-
-
-
-@app.get("/s", response_class=HTMLResponse)
-async def inssdex(request: Request):
-    #tweets = get_tweets(hashtag="#biden", count=5)
-    tweets = []
-    html_content = "<h2>Recent Tweets</h2>"
-    for tweet in tweets:
-        html_content += f"<p>{tweet.text}</p>"
-        ranking, score = calculateSentiment(tweet.text)
-        
-        if ranking == "positive":
-            html_content += '<p style="color: green">Positive: ' + score*100 + '%</p>'
-        elif ranking == "neutral":
-            html_content += '<p style="color: blue">Neutral: ' + score*100 + '%</p>'
-        elif ranking == "negative":
-            html_content += '<p style="color: red">Negative: ' + score*100 + '%</p>'
-            
-        
-    return html_content

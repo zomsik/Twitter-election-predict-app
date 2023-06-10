@@ -1,7 +1,7 @@
 import requests
 import json 
 import os
-from data.Tweet import Tweet
+from tweets.Tweet import Tweet
 
 def get_tweets(hashtag, count):
 

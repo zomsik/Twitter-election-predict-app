@@ -15,16 +15,20 @@
         <tr>
             <td>{{ tweet }}</td>
             <td>
-                <p class="positive">{{ 'Pozytywny' if ranking_own_model == "positive" }}</p>
-                <p class="neutral">{{ 'Neutralny' if ranking_own_model == "neutral" }}</p>
-                <p class="negative">{{ 'Negatywny' if ranking_own_model == "negative" }}</p>
+                <p class="positive">{{ 'Pozytywny' if ranking_cardiffnlp_model == "positive" }}</p>
+                <p class="neutral">{{ 'Neutralny' if ranking_cardiffnlp_model == "neutral" }}</p>
+                <p class="negative">{{ 'Negatywny' if ranking_cardiffnlp_model == "negative" }}</p>
+            
             
                 <p>{{ '%.2f' % (sentiment_own_model*100) }}%</p>
 
             </td>
             <td>
-                <p>{{ ranking_own_model }}</p>
-                <p>{{ '%.2f' % (sentiment_pretrained_model*100) }}%</p>
+                <p class="positive">{{ 'Pozytywny' if ranking_cardiffnlp_model == "positive" }}</p>
+                <p class="neutral">{{ 'Neutralny' if ranking_cardiffnlp_model == "neutral" }}</p>
+                <p class="negative">{{ 'Negatywny' if ranking_cardiffnlp_model == "negative" }}</p>
+            
+                <p>{{ '%.2f' % (sentiment_cardiffnlp_model*100) }}%</p>
             </td>
         </tr>
     </table>

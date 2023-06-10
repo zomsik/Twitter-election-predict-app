@@ -17,7 +17,7 @@ def preprocess(text):
     return " ".join(new_text)
 
 
-def calculateSentiment(text):
+def calculateCardiffnlpSentiment(text):
     task='sentiment'
     MODEL = f"cardiffnlp/twitter-roberta-base-{task}"
     tokenizer = AutoTokenizer.from_pretrained(MODEL)

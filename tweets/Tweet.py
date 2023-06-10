@@ -15,5 +15,5 @@ class Tweet:
         self.retweets = retweets
 
     def __str__(self):
-        return f"{self.username}: {self.text}, {self.views}, {self.likes}"
+        return f"{self.username}: {self.text}, views: {self.views}, likes: {self.likes}"
 
