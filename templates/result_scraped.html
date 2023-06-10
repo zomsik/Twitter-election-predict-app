@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Wyniki webscrapowania tweetów</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/result.css">
+</head>
+<body>
+    <h1>Wyniki webscrapowania tweetów</h1>
+    <h2>Znalezione tweety:</h2>
+    {% for tweet in tweets %}
+        <p>{{ tweet }}</p>
+    {% endfor %}
+</body>
+</html>

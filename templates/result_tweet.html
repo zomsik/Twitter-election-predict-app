@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Wynik oceny tweeta</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/result.css">
+</head>
+<body>
+    <h1>Ocena sentymentu tweeta</h1>
+    <table>
+        <tr>
+            <th>Tresć Tweeta</th>
+            <th>Własny model</th>
+            <th>Gotowy model</th>
+        </tr>
+        <tr>
+            <td>{{ tweet }}</td>
+            <td>
+                <p class="positive">{{ 'Pozytywny' if ranking_own_model == "positive" }}</p>
+                <p class="neutral">{{ 'Neutralny' if ranking_own_model == "neutral" }}</p>
+                <p class="negative">{{ 'Negatywny' if ranking_own_model == "negative" }}</p>
+            
+                <p>{{ '%.2f' % (sentiment_own_model*100) }}%</p>
+
+            </td>
+            <td>
+                <p>{{ ranking_own_model }}</p>
+                <p>{{ '%.2f' % (sentiment_pretrained_model*100) }}%</p>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

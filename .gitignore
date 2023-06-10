@@ -6,7 +6,7 @@ server/__pycache__/
 test.py
 .env
 model/cardiffnlp/
-
+cardiffnlp/
 # Spyder project settings
 .spyderproject
 .spyproject
