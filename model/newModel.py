@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+
 # Save Model Using Pickle
 import pickle
 import os
@@ -6,6 +6,7 @@ import pandas as pd
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
 from data.get_tweets import get_tweets
 folder = 'model/'
 
@@ -46,8 +47,32 @@ def loadModel():
     return learningModel
         
         
-def makeNewModel(tweets):
-    X_train, X_test, y_train, y_test = train_test_split(tweets.text, tweets.title, test_size=0.2, random_state=42)
+def makeNewModel():
+    with open('data/data_training.csv', 'r', encoding='latin-1') as file:
+        loadData = file.readlines()
+
+    data = pd.DataFrame([row.strip('"').split('","') for row in loadData], columns=["sentiment", "id", "data", "query", "user", "text"])
+
+    x = data['text'].values
+    y = data['sentiment'].values
+    
+    vectorizer = CountVectorizer()
+    X = vectorizer.fit_transform(x)
+    
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    
+    
+    
+    
+    model = LogisticRegression()
+
+    # Trenowanie modelu
+    model.fit(X_train, y_train)
+
+    # Ocena modelu na zbiorze testowym
+    accuracy = model.score(X_test, y_test)
+    print(f"Dokładność modelu: {accuracy}")
+    return
     
     X_train_vec, X_test_vec = vectorizeModel(X_train, X_test)
     
@@ -65,5 +90,5 @@ def check():
     a = loadModel()
     return
 
+makeNewModel()
 
-tweets = get_tweets(hashtag="#biden", count=3)

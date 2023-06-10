@@ -12,3 +12,8 @@ cardiffnlp/
 .spyproject
 .spyproject/
 .spyproject/*
+
+*.h5
+*.w2v
+*.pkl
+*.csv
