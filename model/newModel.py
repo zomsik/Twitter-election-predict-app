@@ -109,7 +109,7 @@ def createNewModel():
     
     model.fit(x_train, y_train,
                     batch_size=1024,
-                    epochs=2,
+                    epochs=8,
                     validation_split=0.1,
                     verbose=1,
                     callbacks=callbacks)

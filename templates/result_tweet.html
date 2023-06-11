@@ -9,25 +9,28 @@
     <table>
         <tr>
             <th>Tresć Tweeta</th>
-            <th>Własny model</th>
-            <th>Gotowy model</th>
+            <th>Własny model</br>(Skala 0-100%)</th>
+            <th>Model textblob</br>(Skala 0-100%)</th>
+            <th>Model Cardiffnlp</br>(Prawdopodobieństwo</br>najprawdopodobniejszego</br>sentymentu)</th>
         </tr>
         <tr>
             <td>{{ tweet }}</td>
             <td>
-                <p class="positive">{{ 'Pozytywny' if ranking_cardiffnlp_model == "positive" }}</p>
-                <p class="neutral">{{ 'Neutralny' if ranking_cardiffnlp_model == "neutral" }}</p>
-                <p class="negative">{{ 'Negatywny' if ranking_cardiffnlp_model == "negative" }}</p>
-            
-            
+                <p class="positive">{{ 'Pozytywny' if ranking_own_model == "positive" }}</p>
+                <p class="neutral">{{ 'Neutralny' if ranking_own_model == "neutral" }}</p>
+                <p class="negative">{{ 'Negatywny' if ranking_own_model == "negative" }}</p>
                 <p>{{ '%.2f' % (sentiment_own_model*100) }}%</p>
-
+            </td>
+            <td>
+                <p class="positive">{{ 'Pozytywny' if ranking_textblob_model == "positive" }}</p>
+                <p class="neutral">{{ 'Neutralny' if ranking_textblob_model == "neutral" }}</p>
+                <p class="negative">{{ 'Negatywny' if ranking_textblob_model == "negative" }}</p>
+                <p>{{ '%.2f' % (sentiment_textblob_model*100) }}%</p>
             </td>
             <td>
                 <p class="positive">{{ 'Pozytywny' if ranking_cardiffnlp_model == "positive" }}</p>
                 <p class="neutral">{{ 'Neutralny' if ranking_cardiffnlp_model == "neutral" }}</p>
                 <p class="negative">{{ 'Negatywny' if ranking_cardiffnlp_model == "negative" }}</p>
-            
                 <p>{{ '%.2f' % (sentiment_cardiffnlp_model*100) }}%</p>
             </td>
         </tr>
