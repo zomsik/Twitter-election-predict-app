@@ -10,7 +10,7 @@ import os
 MODEL = "cardiffnlp/twitter-roberta-base-sentiment"
 tokenizer = None
 model = None
-labels = []
+labels = ['negative', 'neutral', 'positive']
 
 def preprocess(text):
     new_text = []
@@ -54,9 +54,6 @@ def calculateCardiffnlpSentiment(text):
     global tokenizer, model, labels
     if tokenizer is None or model is None:
         load_or_download_model()
-        
-    if not labels:
-        load_labels()
 
     text = preprocess(text)
     encoded_input = tokenizer(text, return_tensors='pt')

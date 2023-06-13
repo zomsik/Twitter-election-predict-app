@@ -6,22 +6,27 @@
 </head>
 <body>
 
-    <h1>Ocena tweeta</h1>
-    <form action="/analyze_tweet" method="post" class="form-inside">
-        <label for="tweet_text" class="form-label">Tekst tweeta:</label>
-        <textarea id="tweet_text" name="tweet_text" class="form-field" maxlength="300" placeholder="Treść Tweeta"></textarea>
-        <button type="submit" class="form-button">Oceń</button> 
-    </form>
-    
-    <div class="divider"></div>
-
-    <h1>Webscrapowanie tweetów</h1>
-    <form action="/scrape_tweets" method="post" class="form-inside">
-        <label for="tweet_text" class="form-label">Ilość tweetów:</label>
-        <input type="number" id="num_tweets" min="1" max="10" name="num_tweets" class="form-field">
-        <button type="submit" class="form-button">Ściągnij</button> 
-    </form>
-
+	<div class="container">
+        <div class="form-container">
+            <div class="form">
+                <h1>Ocena tweeta</h1>
+                <form action="/analyze_tweet" method="post" class="form-inside">
+                    <textarea id="tweet_text" name="tweet_text" class="form-field-text" maxlength="300" placeholder="Treść Tweeta" required></textarea>
+                    <button type="submit" class="form-button">Ściągnij</button> 
+                </form>
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="form-container">
+            <div class="form">
+                <h1>Webscrapowanie tweetów</h1>
+                <form action="/scrape_tweets" method="post" class="form-inside">
+                    <input type=number id="tweet_text" min=1 max=9 name="tweet_text" class="form-field-number" maxlength="300" placeholder="Ilość tweetów" required>
+                    <button type="submit" class="form-button">Ściągnij</button> 
+                </form>
+            </div>
+        </div>
+    </div>
 
 </body>
 </html>

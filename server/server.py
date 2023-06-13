@@ -43,18 +43,35 @@ async def scrape_tweets(request: Request):
     outputTweets = []
     
     scraped_tweets = get_tweets("#biden", num_tweets)
-    
+
+    pos = neu = neg = 0
+
     for tweet in scraped_tweets:
         text = str(tweet.text)
         cardiffnlpRanking, cardiffnlpScore = calculateCardiffnlpSentiment(text)
         textblobRanking, textblobScore = getTextBlobPredict(text)
         ownRanking, ownScore = predict(text)
+        if ownRanking == "positive":
+            pos+=1
+        elif ownRanking == "neutral":
+            neu+=1
+        elif ownRanking == "negative":
+            neg+=1
         
         outputTweets.append(SentimentComparisonModel(text, cardiffnlpRanking, cardiffnlpScore, 
                                            textblobRanking, textblobScore, 
                                            ownRanking, ownScore))
     
-    
-    
+        
+    webscrapResult = "Na podstawie webscrapowania tweetów można stwierdzić, że "
 
-    return templates.TemplateResponse("result_scraped.html", {"request": request, "tweets": outputTweets})
+    if pos >= neu and pos > neg:
+        webscrapResult += "Biden MA SZANSĘ na ponowną reelekcję z uwagi na przeważające tweety o pozytywnym sentymencie."
+    elif neu > pos and neu > neg:
+        webscrapResult += "NIE WIADOMO czy Biden ma szanse na ponowną reelekcję z uwagi na przeważające tweety o neutralnym sentymencie."
+    elif neg >= neu and neg > pos:
+        webscrapResult += "Biden NIE MA SZANSY na ponowną reelekcję z uwagi na przeważające tweety o negatywnym sentymencie." 
+    else:
+        webscrapResult += "NIE WIADOMO czy Biden ma szanse na ponowną reelekcję z uwagi na duże podział tweetów względem ich sentymentu."
+
+    return templates.TemplateResponse("result_scraped.html", {"request": request, "tweets": outputTweets, "webscrapResult": webscrapResult})
