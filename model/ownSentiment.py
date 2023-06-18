@@ -3,27 +3,20 @@ import os
 import pickle
 from model.newModel import createNewModel
 from keras.utils import pad_sequences
-from keras.preprocessing.text import Tokenizer
 from keras.models import load_model 
 
 model = None
-w2v_model = None
 tokenizer = None
-encoder = None
 
 def loadModel():
-    global model, w2v_model, tokenizer, encoder
+    global model, tokenizer
     
-    if os.path.exists('data/model.h5') and os.path.exists('data/model.w2v') and os.path.exists('data/tokenizer.pkl') and os.path.exists('data/encoder.pkl'):
+    if os.path.exists('data/model.h5') and os.path.exists('data/tokenizer.pkl'):
         model = load_model("data/model.h5")
-        #w2v_model = load_model("data/model.w2v")
         tokenizer = pickle.load(open('data/tokenizer.pkl', 'rb'))
-        #encoder = pickle.load(open('data/encoder.pkl', 'rb'))
     else:
-        #model, w2v_model, tokenizer, encoder = createNewModel()
-        print("wczytaj")
-        
-        
+        model, tokenizer = createNewModel()
+
 
 def decode_sentiment(score):
     label = "neutral"

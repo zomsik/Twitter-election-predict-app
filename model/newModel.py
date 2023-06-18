@@ -27,7 +27,6 @@ def loadData():
 
 
 def preprocess(text, stem=False):
-    # Remove link,user and special characters
     text = re.sub("@\S+|https?:\S+|http?:\S|[^A-Za-z0-9]+", ' ', str(text).lower()).strip()
     tokens = []
     
@@ -114,11 +113,8 @@ def createNewModel():
                     verbose=1,
                     callbacks=callbacks)
     
-    
     model.save("data/model.h5")
-    w2v_model.save("data/model.w2v")
     pickle.dump(tokenizer, open("data/tokenizer.pkl", "wb"), protocol=0)
-    pickle.dump(encoder, open("data/encoder.pkl", "wb"), protocol=0)
     
-    return model, w2v_model, tokenizer, encoder
+    return model, tokenizer
     
